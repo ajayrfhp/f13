@@ -25,6 +25,7 @@ var tt,weapon=0;
 var d,dir;
 var zombie_array=new Array();
 var t;
+var jx=new Array();
 
 var hero={
 x:100,
@@ -90,14 +91,14 @@ zombie.prototype.update = function()
 //jack 
 function jack(id)
 	{
-		this.y=0;
+		this.y=hero.y+30;
 		this.id=id;
 		this.x=hero.x;
 		this.img=new Image();
-		this.img.src='sprites/jack.png';
+		this.img.src='sprites/nat.png';
 		this.draw = function() 
 		{
-		  ctx.drawImage(this.img,11,64,69,61,this.x,this.y,30,35);
+		  ctx.drawImage(this.img,0,0,70,60,this.x,this.y,30,35);
 		}
 	}
 jack.prototype.fall = function() 
@@ -149,7 +150,8 @@ window.addEventListener("keypress", function(event){
 		{
 		weapon=2;
 		t=++t||1;
-	jx=new jack(t);
+	jx[t]=new jack(t);
+		
 		}
   });
 
@@ -220,9 +222,12 @@ else
   }
   else if(weapon==2)
 	{
-	t=++t||1;
-	jx.draw(t);
-	jx.fall(t);
+		for(var q=1;q<jx.length;q=q+1)
+		{
+		jx[q].draw(t);
+			jx[q].fall(t);     
+		}
+	
 	}
 	}  
   }
