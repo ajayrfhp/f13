@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<script type="text/javascript">
+var canvas;
+var draw;
+var width;
+var height;
+var x=10;
+var y=10;
+var i=0;
+var j=0.1;
+var image=null;
+function init()
+	{
+	canvas = document.getElementById('mycanvas');
+  ctx = canvas.getContext("2d");
+	height=canvas.height;
+	width=canvas.width;
+	setInterval(redraw,50);
+	var image=new Image();
+	image.onload=loaded();
+	image.src="sprites/1.1.png";
+	}
+function clear(c)
+	{
+	c.clearRect(0,0,width,height);
+	}
+function loaded() {
+  imageReady = true;
+  tt=setInterval(redraw,120);
+}
+	function redraw()
+	{	
+	clear(ctx);
+	ctx.drawImage(image,368,163,505,1000,100,100,100,100);
+	}
+</script>
+<body onLoad="init()">
+<canvas id="mycanvas" width="750" height="350" style="border:1px solid #d3d3d3;">
+Your browser does not support the HTML5 canvas tag.</canvas>
+</body>
+</html>

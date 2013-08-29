@@ -26,7 +26,7 @@ var d;
 var hero={
 x:200,
 frame:0,
-y:0,
+y:100,
 left:function()
 	{
 	hero.x-=3;
@@ -48,9 +48,11 @@ function onload()
   ctx = canvas.getContext("2d");
   img = new Image();
   img.src = 'sprites/main.png';
-  img.onload = loaded();
+  img2=new Image();
+  img2.src='sprites/attack.png';
+  img2.onload = loaded();
   hero.x=100;
-  hero.y=0;
+  hero.y=100;
 
  }
 function loaded() {
@@ -71,7 +73,12 @@ window.addEventListener("keypress", function(event){
 	hero.right();
 	d=2;
 	}
-	});
+	if(key==32)
+	{
+	d=4;
+	}
+	}
+		);
 window.addEventListener("keyup",function()
 	{
 	d=3;
@@ -96,6 +103,15 @@ window.addEventListener("keyup",function()
 	{
 	ctx.drawImage(img,160,0,30,35,hero.x,hero.y,35,35);
 	}
+	else if(d==4)
+	{
+	alert('dasdasd');
+	ctx.drawImage(img,160,0,30,35,hero.x,hero.y,35,35);
+	ctx.drawImage(img,82*hero.frame,440,76,100,
+                      hero.x,100,200,150);
+	}
+	
+	
 	}				  
 }		
 </script> 

@@ -1,0 +1,55 @@
+# Festember 13 Game Development Sheet
+
+Name: Ajay Prasadh V
+
+## Genre
+
+> Base gameplay mechanic description. Example,
+
+*side-view-jumper-scroller*
+
+## Overview
+
+> Detailed description of *gameplay* mechanic
+
+## Theme
+
+> Plan on introducing Festember theme elements
+
+## Approach
+
+> Whether using any game engines **or** frameworks, including and certainly not limited to: physics engines, sprite managers, canvas animatiors. Example,
+
+- Box2D Physics
+- EaselJS
+
+## Milestone
+
+> Which features on completion will sound real cool. For example, a catapault game will have:
+
+- World Physics
+- User Controls
+- Rough gameplay
+- Sprites and Animations
+- Polished effects
+- Final demo
+
+## Required assets
+
+> Fill out as a list with detailed descriptions and sizes. Also mention any art style you think is core to your game. Example,
+
+### Birds
+
+- Blue bird - small, round
+- Black bird - large, round
+- Yellow bird - triangular
+
+### Pigs
+
+- Generic green head
+- Royal green head
+- Solider green head
+
+## Completion
+
+> If any...

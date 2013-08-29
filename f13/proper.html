@@ -89,10 +89,9 @@ zombie.prototype.update = function()
 
   //throwing jack 
 //jack 
-function jack(id)
+function jack()
 	{
 		this.y=hero.y+30;
-		this.id=id;
 		this.x=hero.x;
 		this.img=new Image();
 		this.img.src='sprites/nat.png';
@@ -121,7 +120,7 @@ function onload()
 function loaded() {
   imageReady = true;
   d=3;
-  tt=setInterval(redraw,100);
+  tt=setInterval(redraw,50);
 }
 
 window.addEventListener("keypress", function(event){
@@ -194,8 +193,8 @@ function redraw()
   }
   	for(var q=1;q<jx.length;q=q+1)
 		{
-		jx[q].draw(t);
-			jx[q].fall(t);     
+		jx[q].draw();
+			jx[q].fall();     
 		}
   ////////////////////////////////////////////////////////////////////
 
@@ -224,13 +223,10 @@ else
       
       if(hero.axe_x>canvas.width)
         weapon=0;
-
   }
-  
-	
+ 
 	}  
   }
-
 </script>
 Press a & d to move left/right. Press space+a or space+d while moving to throw weapon.<br/>
 As of now,works only in Chrome 

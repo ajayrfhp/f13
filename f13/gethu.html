@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript">
+var canvas = null;
+var img = null;
+var ctx = null;
+var imageReady = false;
+var x,y;
+var f=0;
+var mx,my;
+function get(event)
+ {
+ mx=event.clientX;
+my=event.clientY; 
+ }
+function onload() {
+  canvas = document.getElementById('mycanvas');
+  ctx = canvas.getContext("2d");
+   img = new Image();
+  img.src = 'sprites/r.png';
+   img.onload=loaded();
+ x=350;
+y=250;
+  }
+function loaded() {
+  imageReady = true;
+   setTimeout( update,250);
+}
+var frame=0;
+function update()
+	{   
+	redraw();
+	if(frame>=4){frame=0;f=0;}
+	setTimeout(update,17);
+	}
+function redraw() {
+  ctx.fillStyle = '#FFFFFF';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  if (imageReady)
+  {
+  if(mx>=0 && mx<=200)
+frame=4;
+else if(mx>=200 && mx<=400)
+frame=3;
+else if(mx>=400 && mx<=600)
+frame=2;
+else if(mx>=600 && mx<=800)
+frame=1;
+else if(mx>=800 && mx<=1000)
+frame=0;
+ if(frame==0)
+ ctx.drawImage(img,0,15,75,103,x,y,100,100);
+else if(frame==1)
+	 ctx.drawImage(img,75,15,86,103,x,y,100,100);
+else if(frame==2)
+    ctx.drawImage(img,171,15,88,103,x,y,100,100);
+else if(frame==3)
+ ctx.drawImage(img,264,15,85,103,x+10,y,100,100);
+else if(frame==4)
+   ctx.drawImage(img,367,15,83,103,x+20,y,100,100);
+  }
+}  
+function fire()
+{
+f=1;
+}
+</script>
+	<title></title>
+</head>
+<body style='position: absolute; padding:0; margin:0; height: 100%; width:100%' onmousemove="get(event)" onclick="fire()" onload="onload()">
+<canvas id="mycanvas" height="1000px" width="1000 px"></canvas>
+</body>
+</html>

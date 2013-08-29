@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript">
+var canvas = null;
+var img = null,img2=null;
+var ctx = null;
+var imageReady = false;
+var x,y;
+var mx,my;
+function get(event)
+ {
+ mx=event.clientX;
+my=event.clientY; 
+ }
+function onload() {
+  canvas = document.getElementById('mycanvas');
+  ctx = canvas.getContext("2d");
+   img = new Image();
+   img.src = 'sprites/1.1.png';
+	angle=0;
+   img.onload=loaded();
+  x=100;
+y=100;
+  }
+function loaded() {
+  imageReady = true;
+   
+   setTimeout( update,25000 / 60 );
+
+   }
+var frame=1,angle;
+function update()
+	{
+
+	redraw();
+	frame++;
+	if(frame>=7)frame=1;
+	setTimeout(update,25000/60);
+	}
+var fx,flag=0,fy;
+function DegToRad(d) {
+    // Converts degrees to radians
+    return d * 0.0174532925199432957;
+}
+function redraw() {
+  	  ctx.fillStyle = '#FFFFFF';
+  if (imageReady)
+  {
+	angle+=2;   
+   ctx.clearRect(0,0,mycanvas.width,mycanvas.height);
+    ctx.save();
+     ctx.translate(img.width * 0.5, img.height * 0.5);
+     ctx.rotate(DegToRad(angle));
+     ctx.translate(-img.width * 0.5, -img.height * 0.5);
+  ctx.drawImage(img,383,157,510,955,x,y,75,75);
+	ctx.restore();
+	
+	}
+					 }		
+</script>
+	<title></title>
+</head>
+<body style='position: absolute; padding:0; margin:0; height: 100%; width:100%' onmousemove="get(event)"  onload="onload()">
+<canvas id="mycanvas" height="1000px" width="1000 px"></canvas>
+</body>
+</html>

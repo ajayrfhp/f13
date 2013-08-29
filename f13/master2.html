@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-
 <style>
 .myCanvas
 {
@@ -24,22 +22,14 @@ var img = null,image=null,img3=null;
 var ctx = null;
 var imageReady = false;
 var tt,weapon=0;
-var d,k,l;
+var d,k;
 var zframe,zx;
-function  zombie(id)
-{
-this.id=id;
-this.x=Math.random(0,50);
-this.y=400;
-this.frame=0;
-}
 var hero={
 x:100,
 y:100,
 axe:0,
 axe_x:0,
 frame:0,
-axe_y:0,
 left:function()
   {
   hero.x-=3;
@@ -55,10 +45,9 @@ right:function()
   hero.frame=0;
   }
 }
-	zmbe=new zombie('1');
-	function onload()
+function onload()
 {
-k=0;l=0;
+k=0;
   canvas = document.getElementById('myCanvas');
   ctx = canvas.getContext("2d");
   img = new Image();
@@ -72,16 +61,16 @@ k=0;l=0;
   zframe=0;
   hero.x=100;
 zx=400;
+
  }
 function loaded() {
   imageReady = true;
-  tt=setInterval(redraw,120);
+  tt=setInterval(redraw,100);
 }
 window.addEventListener("keypress", function(event){
   
   var key=event.keyCode;
- 
-	if(key==97)
+    if(key==97)
     {
     hero.left();
     d=1;
@@ -91,16 +80,13 @@ window.addEventListener("keypress", function(event){
     hero.right();
     d=2;
     }
-		if(key==115)
-		{
-		weapon=2;
-		}
-   if(key==32 && d==2)
+    if(key==32 && d==2)
     {
       weapon=1;
       hero.axe=0;
       hero.axe_x=hero.x +10;
     }
+   
   });
 
 window.addEventListener("keyup",function(){ d=3;});
@@ -111,13 +97,11 @@ function redraw()
 
   if (imageReady)
   {
-	//draws the walking zombie 
 	zframe+=1;
 	 if(zframe>=4)
 		{
 		zframe=1;
 		}
-	//k indicates if zombie is been hit by the blade
 		if(!k)
 		{
 	ctx.drawImage(img3,130,67*zframe,60,67,zx,100,60,60);
@@ -125,32 +109,11 @@ function redraw()
 		}
 		else
 		{
-	// if it has been hit open a new image  :)
 		ctx.drawImage(img3,590,140,65,65,zx,hero.y,50,50);	
 		}
-	//draws the vertical zombie
-
-	zmbe.frame+=1;
-	if(zmbe.frame>=7)
-		zmbe.frame=1;
-		else
-		{
-		if(!l)
-		{
-		ctx.drawImage(img3,265,69*zmbe.frame,60,66,50,zmbe.y,60,60);
-		zmbe.y-=1;
-		}
-		else
-		ctx.drawImage(img3,590,140,65,65,zmbe.x,zmbe.y,50,50);	
-		}
-	
-	
-	
-	//based on the key pressed appropriate sprite is being pressed
 	if(d==1)
     {
-    
-	ctx.drawImage(img,(35*hero.frame)+95,32,30,35,hero.x,hero.y,35,35);
+    ctx.drawImage(img,(35*hero.frame)+95,32,30,35,hero.x,hero.y,35,35);
     }
     else if(d==2)
     {
@@ -161,8 +124,7 @@ function redraw()
       ctx.drawImage(img,35+95,0,30,35,hero.x,hero.y,35,35);
     }
   }
-  // is used to throw the axe 
-  if(weapon==1)
+  if(weapon>0)
   {
 	  hero.axe_x+=20;
 		hero.axe++;
@@ -170,25 +132,12 @@ function redraw()
 		hero.axe=1;
   ctx.drawImage(image,82*hero.axe,440,76,100,hero.axe_x+30,hero.y,60,60);
   }
-  if(weapon==2)
-  {
- 
-  hero.axe_y+=20;
-		hero.axe++;
-		if(hero.axe>=8)
-		hero.axe=1;
-  ctx.drawImage(image,82*hero.axe,440,76,100,hero.x,hero.axe_y,60,60);
-  }
-  //collision detector 
 if(Math.abs(zx-hero.axe_x)<20)
 	{	
 	k=1;
-	}
-if(Math.abs(zmbe.y-hero.axe_y)<20 &&Math.abs(zmbe.x-hero.axe_x)<20)
-	{	
-	l=1;
 	} 
 }
+
 </script>
 </body>
 </html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript">
+var canvas = null;
+var img = null,img2=null;
+var ctx = null;
+var imageReady = false;
+var x,y;
+var fx=new Array();
+var c;
+var dragon={
+	x:350,
+	y:250,
+	nx:x-10,
+	ny:y-10,
+	move:function ()
+		{
+		dragon.x-=10;
+		dragon.y+=10;
+		},
+	
+	
+	
+	
+	fire:function()
+		{
+		ctx.drawImage(img2,0,0,37,98,nx,ny,25,25);
+		},
+	firemove:function()
+		{
+		dragon.nx-=10;
+		dragon.ny+=15;
+		}
+	};
+function onload() {
+  canvas = document.getElementById('mycanvas');
+  ctx = canvas.getContext("2d");
+   img = new Image();
+ img2=new Image();
+  img.src = 'sprites/FlyingBlueDragon.png';
+  img2.src= 'sprites/flame2.png';
+  img2.onload=loaded();
+ x=350;
+y=250;
+  var a=dragon;
+c=++c||0;
+for(i=0;i<c;i++)
+{a.fire();
+fx[c]=a;		
+}
+  }
+function loaded() {
+  imageReady = true;
+   setTimeout( update,25000 / 60 );
+}
+var frame=0;
+function update()
+	{
+	redraw();
+	frame++;
+	if(frame>=3)frame=1;
+	setTimeout(update,25000/60);
+	}
+var fx,flag=0,fy;
+function redraw() {
+  ctx.fillStyle = '#FFFFFF';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  if (imageReady)
+  {
+ ctx.drawImage(img,96*frame,95,95,95,x,y,75,75);
+ var g;
+ for(g=0;g<c;g++)
+  a.movefire(fx[g]);
+		}
+}		
+</script>
+	<title></title>
+</head>
+<body style='position: absolute; padding:0; margin:0; height: 100%; width:100%' onload="onload()">
+<canvas id="mycanvas" height="1000px" width="1000 px"></canvas>
+</body>
+</html>

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>F13 Game</title>
 <style>
 .myCanvas
 {
@@ -47,6 +48,7 @@ right:function()
   hero.frame=0;
   }
 }
+
 function zombie(x,type)
 {
    this.x=x;
@@ -56,6 +58,7 @@ function zombie(x,type)
    this.x_img=0;
    this.y_img=0;
    this.x_inc=0;
+   this.die=false;
    this.img=new Image();
    if(type==1)
    {
@@ -75,8 +78,15 @@ zombie.prototype.update = function()
 {
    if(this.fps<this.max_fps)
    {  
+      if(this.die==false){
       this.y-=2;
       this.fps++;
+      }
+      else
+      {
+        this.y+=20;
+        this.fps++;
+      }
    }
    else
    {
@@ -86,26 +96,26 @@ zombie.prototype.update = function()
 
 //end of constructor
 
-  //throwing jack 
+//throwing jack 
 //jack 
 function jack(id)
-	{
-		this.y=hero.y+30;
-		this.id=id;
-		this.x=hero.x;
-		this.img=new Image();
-		this.img.src='sprites/nat.png';
-		this.draw = function() 
-		{
-		  ctx.drawImage(this.img,0,0,70,60,this.x,this.y,23,24);
-		}
-	}
+  {
+    this.y=hero.y+30;
+    this.id=id;
+    this.x=hero.x;
+    this.img=new Image();
+    this.img.src='sprites/nat.png';
+    this.draw = function() 
+    {
+      ctx.drawImage(this.img,0,0,70,60,this.x,this.y,23,24);
+    }
+  }
 jack.prototype.fall = function() 
 {
   this.y+=20;
  };
  
-  ////
+  /////////
 function onload()
 {
   canvas = document.getElementById('myCanvas');
@@ -144,14 +154,13 @@ window.addEventListener("keypress", function(event){
       dir= ( d==2?1:-1);
       hero.axe_x=hero.x + (28*dir);
     }
-	//jack 
-	if(key==115)
-		{
-		weapon=2;
-		t=++t||1;
-	jx[t]=new jack(t);
-		
-		}
+  //jack 
+  if(key==115)
+    {
+    t=++t||1;
+  jx[t]=new jack(t);
+    
+    }
   });
 
 window.addEventListener("keyup",function(){ d=3;});
@@ -160,6 +169,10 @@ function redraw()
  {
   ctx.fillStyle = '#FFFFFF';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.beginPath();
+      ctx.moveTo(0,hero.y+33);
+      ctx.lineTo(canvas.width,hero.y+33);
+      ctx.stroke();
   if (imageReady)
   {
     if(d==1)
@@ -187,27 +200,48 @@ function redraw()
   {
        zombie_array[i].update();
        zombie_array[i].draw();
+       if(zombie_array[i].y<50)
+       {
+         zombie_array.splice(i,1);
+       }
   }
+     
+  for(var q=1;q<jx.length;q=q+1) // Prinring jacks
+  {
+    jx[q].draw();
+    jx[q].fall();
 
+    for(var i=0;i<zombie_array.length;i++)
+    {
+      //console.log(zombie_array[i].y);
+      if(zombie_array[i].y==jx[q].y )
+      {
+        zombie_array[i].die=true;
+        //alert("contact");
+        jx[q].y=600;
+      }
+    }
+/*
+    if(jx[q].y>500)
+       {
+         jx.splice(q,1);
+       }   */  
+  }
   ////////////////////////////////////////////////////////////////////
 
-  
   if(weapon>0)
   {
-	// axe was getting thrown too close from the body fixed that based on direction to be thrown
-	if(weapon==1)
-	{
-	if(dir>0)
-	{
-	for(var q=1;q<jx.length;q=q+1)
-		{
-				jx[q].fall(t);     
-		}
- ctx.drawImage(image,82*hero.axe,440,76,100,hero.axe_x+5,hero.y,50,25);
-}
-else
-		ctx.drawImage(image,82*hero.axe,440,76,100,hero.axe_x-15,hero.y,50,25);
-	 if(hero.axe<7)
+  // axe was getting thrown too close from the body fixed that based on direction to be thrown
+  if(weapon==1)
+  {
+    if(dir>0)
+    {
+   ctx.drawImage(image,82*hero.axe,440,76,100,hero.axe_x+5,hero.y,50,25);
+      }
+   else
+      ctx.drawImage(image,82*hero.axe,440,76,100,hero.axe_x-15,hero.y,50,25);
+   
+   if(hero.axe<7)
         {
           hero.axe++;
           hero.axe_x+=20*dir;
@@ -216,23 +250,14 @@ else
       {
         hero.axe=0;
         hero.axe_x+=20*dir;
- 
       }
       
-      if(hero.axe_x>canvas.width)
+    if(hero.axe_x>canvas.width)
         weapon=0;
 
   }
-  else if(weapon==2)
-	{
-		for(var q=1;q<jx.length;q=q+1)
-		{
-		jx[q].draw(t);
-			jx[q].fall(t);     
-		}
-	
-	}
-	}  
+  
+  }  
   }
 
 </script>

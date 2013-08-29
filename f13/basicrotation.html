@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript">
+var canvas = null;
+var img = null,img2=null;
+var ctx = null;
+var imageReady = false;
+var x,y,ox,oy;
+var mx,my;
+function get(event)
+ {
+ mx=event.clientX;
+my=event.clientY; 
+ }
+function onload() {
+  canvas = document.getElementById('mycanvas');
+  ctx = canvas.getContext("2d");
+  img = new Image();
+   img.src = 'sprites/1.1.png';
+   img.onload=loaded();
+   x=100;
+y=100;
+  }
+function loaded() {
+  imageReady = true;
+   setTimeout( update,100);
+   }
+var frame=1,angle;
+function update()
+	{
+	redraw();
+	frame++;
+	if(frame>=7)frame=1;
+	setTimeout(update,50);
+	}
+var fx,flag=0,fy;
+var c1=0,c2=0;
+var stop=0;
+function redraw(){ 
+	 ctx.fillStyle = '#FFFFFF';
+  if(ox !=mx && oy !=my)
+  stop=0;
+  if (imageReady)
+  {
+	x1=x+c1*Math.cos(1*Math.PI/180)-c2*Math.cos(1*Math.PI/180);
+	y1=y+c1*Math.cos(1*Math.PI/180)-c2*Math.cos(1*Math.PI/180);
+	ctx.clearRect(0,0,mycanvas.width,mycanvas.height);
+	if(Math.abs(mx-x1-37.5)<30)
+	{
+	ctx.drawImage(img,383,157,510,955,x,y,75,75);	
+	stop=1;
+	}
+	if(!stop)
+	{
+	if(mx>x1)
+	{
+	ctx.rotate(-1*Math.PI/180);
+	c1=++c1;
+	}
+	else if(mx<x1)
+	{
+	ctx.rotate(1*Math.PI/180);
+	c2=++c2;
+	}
+	ctx.drawImage(img,383,157,510,955,x,y,75,75);	
+	}
+	}
+	ox=mx;oy=my;
+	}
+</script>
+	<title></title>
+</head>
+<body style='position: absolute; padding:0; margin:0; height: 100%; width:100%' onmousemove="get(event)"  onload="onload()">
+<canvas id="mycanvas" height="1000px" width="1000 px"></canvas>
+</body>
+</html>
