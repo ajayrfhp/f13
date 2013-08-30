@@ -2,17 +2,32 @@
 <html>
 <head>
 <title>F13 Game</title>
+<link href='http://fonts.googleapis.com/css?family=Creepster' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Sancreek' rel='stylesheet' type='text/css'>
 <style>
 .myCanvas
 {
 border:10px solid #40403A;
 position:relative;
+/*font-family: 'Creepster', cursive;*/
+}
+.table
+{
+  position: absolute;
+  top:50px;
+  left:550px;
+}
+body
+{
+  font-family: 'Sancreek', cursive;
+  font-size: :200%;
+  color:black;
+  text-shadow: 4px 4px 4px #aaa;
 }
 </style>
 </head>
-<body onload="onload()"  onclick="getcandy()" onmousemove="get(event)">
 <canvas id="myCanvas" class="myCanvas" width="500" height="500" align="center"></canvas>
-<canvas id="cnvs" class="myCanvas" width="250" height="500" align="center"></canvas>
+ 
 <script type="text/javascript">
 var canvas = null,canvas2=null;
 var img = null,image=null,imgd=null,img2=null,img3=null;
@@ -34,6 +49,7 @@ var bf=0;
 var ss;
 var xf=0;
 var ns;
+var house=new Image();
 var bs;
 var gun=new Array();
 var ammo=0;
@@ -310,13 +326,13 @@ this.begy=this.begy||this.y;
 this.radius+=10;
     }
   ///////////////
-function onload()
+
+  function onload()
 {
   mx=mx||-1; 
-  canvas2 = document.getElementById('cnvs');
-  shop = canvas2.getContext("2d");
-  canvas = document.getElementById('myCanvas');
+  canvas=document.getElementById("myCanvas");
   ctx = canvas.getContext("2d");
+  
   img = new Image();
   img.src = 'sprites/main.png';
   image=new Image();
@@ -415,18 +431,14 @@ var q;
 
 function redraw()
  { 
- if(nubomb.radius>=1000)
+ if(nubomb.radius>=1000||nubomb.y>=2000 &&blaston==false)
  {
  blaston=false;
+  isnuke=false;
+ delete nubomb;
+ nubomb=new nuke();
  }
-
- 
-  shop.clearRect(0,0,canvas.width,canvas.height);
-  shop.font = '18pt Calibri';
-  shop.fillStyle = 'black';
-  shop.fillText(candycount,90,50);
-  shop.fillText("nuke",90,100);
-  ctx.fillStyle = '#FFFFFF';
+   ctx.fillStyle = '#FFFFFF';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   /* ########################## */
@@ -435,10 +447,27 @@ function redraw()
   ctx.drawImage(bb,0,0,500,471,0,0,500,500);
   /* ##########################*/
   /*  SCORING    */
-  shop.font = '18pt Calibri';
-  shop.fillStyle = 'black';
-  shop.fillText("Score:  "+disp,90,200);
-  /*                */
+  ctx.fillStyle = 'black';
+  ctx.fillRect(0, 0,500,35);
+  ctx.fillStyle = 'white';
+  ctx.font = '12pt Calibri';
+  ctx.fillText("Score:  "+disp,210,20);
+  ctx.drawImage(imgc,10,2,30,30);
+  ctx.fillText(" X "+candycount,40,20);
+  ctx.beginPath();
+  ctx.arc(420,17,10,0,2*Math.PI);
+  ctx.fillStyle = 'red';
+  ctx.fill();
+  ctx.stroke();
+  ctx.closePath();
+  ctx.beginPath();
+  ctx.arc(420,17,6,0,2*Math.PI);
+  ctx.fillStyle = 'orange';
+  ctx.fill();
+  ctx.stroke();
+  
+  ctx.fillStyle = 'white';  
+  ctx.fillText(" x "+ammo,430,20); 
   if(blaston==true)
  {nubomb.blast(100,500);
   }
@@ -546,8 +575,8 @@ function redraw()
     zombie_array[i].draw();   
    }
   }
-    if(Math.abs(zombie_array[i].x-nubomb.x)<25 &&Math.abs(zombie_array[i].y-nubomb.y)<25 && isnuke==true)
-  blaston=true;
+    if(Math.abs(zombie_array[i].x-nubomb.x)<25 &&Math.abs(zombie_array[i].y-nubomb.y)<25 && isnuke==true &&zombie_array[i].die!=true)
+    blaston=true;
   }
 
   for(var q=1;q<jx.length;q=q+1) // Prinring jacks
@@ -632,12 +661,18 @@ function redraw()
   }
  function nukethem()
  {
+  if(candycount>5)
  isnuke=true;
+ else
+ alert('u need 25 candies');
  }
+ window.addEventListener("click",function(event){get(event);getcandy();}); 
+window.addEventListener("mousemove",function(event){get(event);});
 </script><br/>
 Press a & d to move left/right. Press s to drop jack-lantern.shop for ammo and press space to shoot<br/>
 As of now,works only in Chrome 
 <input type="button" onclick="getammo()" value="shop"/>
 <input type="button" onclick="nukethem()" value="nuke"/>
+<body onload="onload()">
 </body>
 </html>

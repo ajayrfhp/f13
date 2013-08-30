@@ -2,17 +2,34 @@
 <html>
 <head>
 <title>F13 Game</title>
+<link href='http://fonts.googleapis.com/css?family=Creepster' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Sancreek' rel='stylesheet' type='text/css'>
 <style>
 .myCanvas
 {
 border:10px solid #40403A;
 position:relative;
+/*font-family: 'Creepster', cursive;*/
+}
+.table
+{
+  position: relative;
+}
+body
+{
+  font-family: 'Sancreek', cursive;
+  font-size: :200%;
+  color:white;
+  text-shadow: 4px 4px 4px #aaa;
 }
 </style>
 </head>
 <body onload="onload()"  onclick="getcandy()" onmousemove="get(event)">
 <canvas id="myCanvas" class="myCanvas" width="500" height="500" align="center"></canvas>
 <canvas id="cnvs" class="myCanvas" width="250" height="500" align="center"></canvas>
+<div id="table" name="table">
+
+</div> 
 <script type="text/javascript">
 var canvas = null,canvas2=null;
 var img = null,image=null,imgd=null,img2=null,img3=null;
@@ -34,6 +51,7 @@ var bf=0;
 var ss;
 var xf=0;
 var ns;
+var house=new Image();
 var bs;
 var gun=new Array();
 var ammo=0;
@@ -415,14 +433,19 @@ var q;
 
 function redraw()
  { 
- if(nubomb.radius>=1000)
+ if(nubomb.radius>=1000||nubomb.y>=2000 &&blaston==false)
  {
  blaston=false;
+  isnuke=false;
+ delete nubomb;
+ nubomb=new nuke();
  }
 
  
   shop.clearRect(0,0,canvas.width,canvas.height);
+  //shop.drawImage(house,0,0);
   shop.font = '18pt Calibri';
+  //shop.font='Creepster'
   shop.fillStyle = 'black';
   shop.fillText(candycount,90,50);
   shop.fillText("nuke",90,100);
@@ -435,7 +458,8 @@ function redraw()
   ctx.drawImage(bb,0,0,500,471,0,0,500,500);
   /* ##########################*/
   /*  SCORING    */
-  shop.font = '18pt Calibri';
+  //shop.font = '18pt Calibri';
+  shop.font='Creepster'
   shop.fillStyle = 'black';
   shop.fillText("Score:  "+disp,90,200);
   /*                */
@@ -546,8 +570,8 @@ function redraw()
     zombie_array[i].draw();   
    }
   }
-    if(Math.abs(zombie_array[i].x-nubomb.x)<25 &&Math.abs(zombie_array[i].y-nubomb.y)<25 && isnuke==true)
-  blaston=true;
+    if(Math.abs(zombie_array[i].x-nubomb.x)<25 &&Math.abs(zombie_array[i].y-nubomb.y)<25 && isnuke==true &&zombie_array[i].die!=true)
+    blaston=true;
   }
 
   for(var q=1;q<jx.length;q=q+1) // Prinring jacks
@@ -632,7 +656,10 @@ function redraw()
   }
  function nukethem()
  {
+  if(candycount>5)
  isnuke=true;
+ else
+ alert('u need 25 candies');
  }
 </script><br/>
 Press a & d to move left/right. Press s to drop jack-lantern.shop for ammo and press space to shoot<br/>

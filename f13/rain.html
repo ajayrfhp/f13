@@ -17,6 +17,7 @@ position:relative;
 var canvas = null,canvas2=null;
 var img = null,image=null,imgd=null,img2=null,img3=null;
 var isnuke=false;
+var israin=false;
 var blaston=false;
 var imgb=null;
 var ctx = null;
@@ -135,7 +136,6 @@ bullet.prototype.shoot = function()
   ctx.fillStyle = 'orange';
   ctx.fill();
   ctx.stroke();
-
   this.dx+=10*this.ox/this.mag;
   this.dy+=10*this.oy/this.mag;
   };
@@ -447,6 +447,11 @@ function redraw()
   nubomb.drop();
   nubomb.draw();
   }
+  if(israin==true)
+  {
+   t=++t||1;
+  jx[t]=new jack(t);
+  }
   if(bf==1)
   {
      if(ammo)
@@ -634,10 +639,15 @@ function redraw()
  {
  isnuke=true;
  }
+ function rain()
+ {
+ israin=true;
+ }
 </script><br/>
 Press a & d to move left/right. Press s to drop jack-lantern.shop for ammo and press space to shoot<br/>
 As of now,works only in Chrome 
 <input type="button" onclick="getammo()" value="shop"/>
 <input type="button" onclick="nukethem()" value="nuke"/>
+<input type="button" onclick="rain()" value="rain :)"/>
 </body>
 </html>

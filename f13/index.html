@@ -415,11 +415,14 @@ var q;
 
 function redraw()
  { 
- if(nubomb.radius>=1000)
+ if(nubomb.radius>=1000 ||nubomb.y>=2000 &&blaston==false)
  {
  blaston=false;
+ isnuke=false;
+ delete nubomb;
+ nubomb=new nuke();
  }
-
+ 
  
   shop.clearRect(0,0,canvas.width,canvas.height);
   shop.font = '18pt Calibri';
@@ -546,7 +549,7 @@ function redraw()
     zombie_array[i].draw();   
    }
   }
-    if(Math.abs(zombie_array[i].x-nubomb.x)<25 &&Math.abs(zombie_array[i].y-nubomb.y)<25 && isnuke==true)
+    if(Math.abs(zombie_array[i].x-nubomb.x)<25 &&Math.abs(zombie_array[i].y-nubomb.y)<25 && isnuke==true &&zombie_array[i].die!=true)
   blaston=true;
   }
 
@@ -632,7 +635,10 @@ function redraw()
   }
  function nukethem()
  {
+ if(candycount>5)
  isnuke=true;
+ else
+ alert('u need 25 candies');
  }
 </script><br/>
 Press a & d to move left/right. Press s to drop jack-lantern.shop for ammo and press space to shoot<br/>
