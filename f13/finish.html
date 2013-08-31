@@ -194,13 +194,13 @@ zombie.prototype.update = function()
       if(this.die==false)
       {
         if(this.walk=='right')
-        this.x+=2;
+        this.x+=2+(disp/20)%15;
         
         if(this.walk=='left')
-        this.x-=2;
+        this.x-=2+(disp/20)%15;
         
         if(this.walk=='up')
-        this.y-=2;
+        this.y-=2+(disp/20)%15;
         
         this.fps++;
       }
@@ -431,7 +431,7 @@ var q;
 
 function redraw()
  { 
- if(nubomb.radius>=1000||nubomb.y>=2000 &&blaston==false)
+ if(nubomb.radius>=500||nubomb.y>=2000 &&blaston==false)
  {
  blaston=false;
   isnuke=false;
